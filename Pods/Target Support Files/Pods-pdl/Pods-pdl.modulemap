@@ -1,0 +1,6 @@
+framework module Pods_pdl {
+  umbrella header "Pods-pdl-umbrella.h"
+
+  export *
+  module * { export * }
+}
