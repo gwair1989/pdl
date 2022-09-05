@@ -19,18 +19,13 @@ struct ReminderCard: View {
         VStack {
             HStack {
                 VStack(alignment: .leading) {
-                
-                
-                Text(title)
-                    .font(.semibold22())
-                    .foregroundColor(Color.white)
-                    
+                    Text(title)
+                        .font(.semibold22())
+                        .foregroundColor(Color.white)
                     Spacer()
-
                     Text(date)
                         .font(.regular16())
                         .foregroundColor(Color.white)
-
                     HStack {
                         Text(hours)
                             .font(.semibold30())
@@ -49,36 +44,33 @@ struct ReminderCard: View {
                 }
                 .padding(.vertical)
                 Spacer()
-                
                 VStack {
                     HStack {
                         Spacer()
-                Button {
-                    print("Tap: Delete Card")
-                    action()
-                } label: {
-                    Image(systemName: "xmark")
-                        .font(.system(size: 22))
-                        .foregroundColor(Color.white)
-                }
+                        Button {
+                            print("Tap: Delete Card")
+                            action()
+                        } label: {
+                            Image(systemName: "xmark")
+                                .font(.system(size: 22))
+                                .foregroundColor(Color.white)
+                        }
                     }
-                Spacer()
+                    Spacer()
                     HStack {
                         Spacer()
-                    VStack {
-                        Text("\(daysLeft) days")
-                            .font(.semibold22())
-                            .foregroundColor(.white)
-                        Text("left")
-                            .font(.semibold22())
-                            .foregroundColor(.white)
+                        VStack {
+                            Text("\(daysLeft) days")
+                                .font(.semibold22())
+                                .foregroundColor(.white)
+                            Text("left")
+                                .font(.semibold22())
+                                .foregroundColor(.white)
+                        }
+                        .padding(.bottom)
                     }
-                    .padding(.bottom)
-                    }
+                }
             }
-            }
-            
-
         }
         .padding()
         .frame(maxWidth: .infinity)
@@ -86,9 +78,3 @@ struct ReminderCard: View {
         .background(BackgroundCard())
     }
 }
-
-//struct ReminderCard_Previews: PreviewProvider {
-//    static var previews: some View {
-//        ReminderCard(title: "Lodoofodffodkfodkfokdffdfsdsdsdsdsdsd", date: "Jul 29, 2022", hours: "05", minute: "00", daysLeft: 2)
-//    }
-//}

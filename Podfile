@@ -9,6 +9,4 @@ target 'pdl' do
 
     pod 'FirebaseAnalytics'
     pod 'FirebaseRemoteConfig'
-    pod 'FirebaseMessaging'
-
 end

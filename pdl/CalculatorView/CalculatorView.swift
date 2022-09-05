@@ -7,12 +7,11 @@
 import SwiftUI
 
 struct CalculatorView: View {
-    @EnvironmentObject var model: ViewModel
-    
+    @StateObject private var model: CalculatorViewModel = CalculatorViewModel()
     @State private var selectedLoanAmount: Double = 2500.0
     @State private var selectedInterestRate: Double = 50.0
     @State private var selectedLoanTermInMonth: Double = 18.0
-    @State var isEditing = false
+    @State private var isEditing = false
     private let isSmall = UIScreen.main.bounds.width == 375
     
     var body: some View {
@@ -37,18 +36,18 @@ struct CalculatorView: View {
         VStack(spacing: 15) {
             VStack(spacing: 5) {
                 Text("$\(model.calulate(loan: selectedLoanAmount, rate: selectedInterestRate, term: selectedLoanTermInMonth))")
-                .font(.bold30())
-                .foregroundColor(.white)
-            Text("Est. Monthly Payment")
-                .font(.regular16())
-                .foregroundColor(.white)
+                    .font(.bold30())
+                    .foregroundColor(.white)
+                Text("Est. Monthly Payment")
+                    .font(.regular16())
+                    .foregroundColor(.white)
             }
             HStack {
-            Text("This loan will really cost you")
+                Text("This loan will really cost you")
                     .font(.medium12())
                     .foregroundColor(Color(hex: "CACACA"))
-            Spacer()
-                Text("$\(String(format:"%.0f", selectedLoanAmount * 10))")
+                Spacer()
+                Text("$\(model.getFullAmount(loan: selectedLoanAmount, rate: selectedInterestRate, term: selectedLoanTermInMonth))")
                     .font(.medium12())
                     .foregroundColor(Color(hex: "CACACA"))
             }
@@ -60,7 +59,7 @@ struct CalculatorView: View {
         
     }
     
-
+    
     
     
     private func SlidersView() -> some View {
@@ -83,31 +82,31 @@ struct CalculatorView: View {
                     .font(.semibold18())
                     .foregroundColor(.black)
                 Spacer()
-            Text("$\(Int(selectedLoanAmount))")
-                .font(.bold30())
-                .foregroundColor(.black)
+                Text("$\(Int(selectedLoanAmount))")
+                    .font(.bold30())
+                    .foregroundColor(.black)
             }
-        
-        
-        Slider(
-            value: $selectedLoanAmount,
-            in: 200...5000,
-            step: 100
-        ) {
             
-        } minimumValueLabel: {
-            Text("200")
-                .font(.semibold18())
-                .foregroundColor(Color(hex: "828282"))
-        } maximumValueLabel: {
-            Text("5000")
-                .font(.semibold18())
-                .foregroundColor(Color(hex: "828282"))
-        } onEditingChanged: { editing in
-            isEditing = editing
-        }
-        .accentColor(Color(hex: "34CB81"))
-        
+            
+            Slider(
+                value: $selectedLoanAmount,
+                in: 200...5000,
+                step: 100
+            ) {
+                
+            } minimumValueLabel: {
+                Text("200")
+                    .font(.semibold18())
+                    .foregroundColor(Color(hex: "828282"))
+            } maximumValueLabel: {
+                Text("5000")
+                    .font(.semibold18())
+                    .foregroundColor(Color(hex: "828282"))
+            } onEditingChanged: { editing in
+                isEditing = editing
+            }
+            .accentColor(Color(hex: "34CB81"))
+            
         }
     }
     
@@ -118,31 +117,31 @@ struct CalculatorView: View {
                     .font(.semibold18())
                     .foregroundColor(.black)
                 Spacer()
-            Text("\(Int(selectedInterestRate))%")
-                .font(.bold30())
-                .foregroundColor(.black)
+                Text("\(Int(selectedInterestRate))%")
+                    .font(.bold30())
+                    .foregroundColor(.black)
             }
-        
-        
-        Slider(
-            value: $selectedInterestRate,
-            in: 0...100,
-            step: 1
-        ) {
             
-        } minimumValueLabel: {
-            Text("0%")
-                .font(.semibold18())
-                .foregroundColor(Color(hex: "828282"))
-        } maximumValueLabel: {
-            Text("100%")
-                .font(.semibold18())
-                .foregroundColor(Color(hex: "828282"))
-        } onEditingChanged: { editing in
-            isEditing = editing
-        }
-        .accentColor(Color(hex: "34CB81"))
-        
+            
+            Slider(
+                value: $selectedInterestRate,
+                in: 0...100,
+                step: 1
+            ) {
+                
+            } minimumValueLabel: {
+                Text("0%")
+                    .font(.semibold18())
+                    .foregroundColor(Color(hex: "828282"))
+            } maximumValueLabel: {
+                Text("100%")
+                    .font(.semibold18())
+                    .foregroundColor(Color(hex: "828282"))
+            } onEditingChanged: { editing in
+                isEditing = editing
+            }
+            .accentColor(Color(hex: "34CB81"))
+            
         }
     }
     
@@ -153,39 +152,32 @@ struct CalculatorView: View {
                     .font(.semibold18())
                     .foregroundColor(.black)
                 Spacer()
-            Text("\(Int(selectedLoanTermInMonth))")
-                .font(.bold30())
-                .foregroundColor(.black)
+                Text("\(Int(selectedLoanTermInMonth))")
+                    .font(.bold30())
+                    .foregroundColor(.black)
             }
-        
-        
-        Slider(
-            value: $selectedLoanTermInMonth,
-            in: 1...36,
-            step: 1
-        ) {
             
-        } minimumValueLabel: {
-            Text("01")
-                .font(.semibold18())
-                .foregroundColor(Color(hex: "828282"))
-        } maximumValueLabel: {
-            Text("36")
-                .font(.semibold18())
-                .foregroundColor(Color(hex: "828282"))
-        } onEditingChanged: { editing in
-            isEditing = editing
-        }
-        .accentColor(Color(hex: "34CB81"))
-        
+            
+            Slider(
+                value: $selectedLoanTermInMonth,
+                in: 1...36,
+                step: 1
+            ) {
+                
+            } minimumValueLabel: {
+                Text("01")
+                    .font(.semibold18())
+                    .foregroundColor(Color(hex: "828282"))
+            } maximumValueLabel: {
+                Text("36")
+                    .font(.semibold18())
+                    .foregroundColor(Color(hex: "828282"))
+            } onEditingChanged: { editing in
+                isEditing = editing
+            }
+            .accentColor(Color(hex: "34CB81"))
+            
         }
     }
-    
-
 }
 
-//struct CalculatorView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        CalculatorView()
-//    }
-//}

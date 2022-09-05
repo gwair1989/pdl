@@ -13,7 +13,7 @@ struct AddReminderView: View {
     @State private var isShowPicker: Bool = false
     @State private var selection: Repeat = .Never
     @State private var titleReminder = ""
-    @EnvironmentObject var model: ViewModel
+    @EnvironmentObject var model: ReminderViewModel
     
     @State private var date = Date()
     var body: some View {
@@ -32,7 +32,7 @@ struct AddReminderView: View {
                     Spacer()
                 }
             }
-
+            
             
         }
         .padding()
@@ -56,20 +56,21 @@ struct AddReminderView: View {
             Spacer()
             Button {
                 print("Tap: Save")
-                model.addReminder(reminder: Reminder(id: UUID(), date: date, isRemind: isRemember, isRepeat: selection, title: titleReminder))
-
-                presentationMode.wrappedValue.dismiss()
+                if !titleReminder.isEmpty {
+                    model.addReminder(reminder: Reminder(id: UUID(), date: date, isRemind: isRemember, isRepeat: selection, title: titleReminder))
+                    presentationMode.wrappedValue.dismiss()
+                }
             } label: {
                 Text("Save")
                     .font(.medium18())
-                    .foregroundColor(Color(hex: "34CB81"))
+                    .foregroundColor(Color(hex: titleReminder.isEmpty ? "BDBDBD" : "34CB81"))
             }
         }
     }
     
     
     private func DateForm() -> some View {
-
+        
         Text(model.getCurrentDay(date: date))
             .font(.medium18())
             .frame(maxWidth: .infinity)
@@ -103,34 +104,34 @@ struct AddReminderView: View {
             
             
             VStack(spacing: 10) {
-            callPickerView()
-                .onTapGesture {
-                    withAnimation {
-                        isShowPicker.toggle()
+                callPickerView()
+                    .onTapGesture {
+                        withAnimation {
+                            isShowPicker.toggle()
+                        }
+                    }
+                
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("Recharge Type")
+                        .font(.regular16())
+                        .foregroundColor(.white)
+                    
+                    ZStack {
+                        TextField("", text: $titleReminder)
+                            .placeholder(when: titleReminder.isEmpty) {
+                                Text(verbatim: "Title")
+                                    .font(.medium18())
+                                    .foregroundColor(Color(hex: "BDBDBD"))
+                            }
+                            .textContentType(.emailAddress)
+                            .keyboardType(.emailAddress)
+                            .padding()
+                            .background(Color(hex: "F5F8F9"))
+                            .cornerRadius(5)
+                            .foregroundColor(.black)
                     }
                 }
-            
-            VStack(alignment: .leading, spacing: 8) {
-                Text("Recharge Type")
-                    .font(.regular16())
-                    .foregroundColor(.white)
-                
-                ZStack {
-                    TextField("", text: $titleReminder)
-                        .placeholder(when: titleReminder.isEmpty) {
-                            Text(verbatim: "Title")
-                                .font(.medium18())
-                                .foregroundColor(Color(hex: "BDBDBD"))
-                        }
-                        .textContentType(.emailAddress)
-                        .keyboardType(.emailAddress)
-                        .padding()
-                        .background(Color(hex: "F5F8F9"))
-                        .cornerRadius(5)
-                        .foregroundColor(.black)
-                }
-            }
-            .padding(.vertical)
+                .padding(.vertical)
             }
             .padding(.top)
             
@@ -165,27 +166,27 @@ struct AddReminderView: View {
     private func callPickerView() -> some View {
         VStack(spacing: 8) {
             HStack {
-            Text("Repeat")
-                .font(.regular16())
-                .foregroundColor(.white)
+                Text("Repeat")
+                    .font(.regular16())
+                    .foregroundColor(.white)
                 Spacer()
             }
-        ZStack {
-            HStack {
-                Text(selection.localizedName)
-                Spacer()
+            ZStack {
+                HStack {
+                    Text(selection.localizedName)
+                    Spacer()
+                }
+                HStack {
+                    Spacer()
+                    Image(systemName: "chevron.down")
+                        .font(.system(size: 12))
+                        .foregroundColor(Color(hex: "#172635"))
+                }
             }
-            HStack {
-                Spacer()
-                Image(systemName: "chevron.down")
-                    .font(.system(size: 12))
-                    .foregroundColor(Color(hex: "#172635"))
-            }
+            .padding()
+            .background(RoundedRectangle(cornerRadius: 10)
+                .fill(Color(hex: "F5F8F9")))
         }
-        .padding()
-        .background(RoundedRectangle(cornerRadius: 10)
-            .fill(Color(hex: "F5F8F9")))
-    }
     }
 }
 

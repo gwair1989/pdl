@@ -7,7 +7,7 @@
 import SwiftUI
 
 struct CurrencyView: View {
-    @EnvironmentObject var model: ViewModel
+    @StateObject private var model: CurrencyViewModel = CurrencyViewModel()
     
     var body: some View {
         VStack(spacing: 0) {
@@ -16,19 +16,14 @@ struct CurrencyView: View {
             if model.currences.isEmpty {
                 ProgressView()
             } else {
-
                 ScrollView {
                     VStack(alignment: .center, spacing: 0) {
                         ForEach(model.currences) { currency in
-
                             CurrencyCard(currency: currency)
-
                         }
                     }
-
                 }
             }
-            
             Spacer()
         }
     }
@@ -37,21 +32,21 @@ struct CurrencyView: View {
     
     
     private func titleView() -> some View {
-            HStack {
-                Spacer()
-                Text("USD-USA")
-                    .font(.semibold22())
-                    .foregroundColor(.black)
-                Spacer()
-            }
-            .background(Color.white.edgesIgnoringSafeArea(.top))
-            .padding()
+        HStack {
+            Spacer()
+            Text("USD-USA")
+                .font(.semibold22())
+                .foregroundColor(.black)
+            Spacer()
+        }
+        .background(Color.white.edgesIgnoringSafeArea(.top))
+        .padding()
     }
     
     
     private func headerView() -> some View {
         HStack {
-           Text("Currency")
+            Text("Currency")
                 .font(.medium16())
                 .foregroundColor(Color(hex: "797979"))
             Spacer()
@@ -64,9 +59,7 @@ struct CurrencyView: View {
         .padding(.horizontal)
         .padding()
         .background(Color(hex: "E8E8E8"))
-        
     }
-    
 }
 
 struct CurrencyView_Previews: PreviewProvider {

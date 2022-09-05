@@ -30,27 +30,27 @@ class NotificationManager {
     
     
     func scheduleNotification(reminder: Reminder) {
-
+        
         let content = UNMutableNotificationContent()
         content.title  = reminder.title.isEmpty ? "Reminder!" : reminder.title
         content.sound = .default
         content.badge = 1
         
-
+        
         let comps = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: reminder.date)
-         
+        
         let trigger = UNCalendarNotificationTrigger(dateMatching: comps, repeats: reminder.isRepeat == .Repeat ? true : false)
         let request = UNNotificationRequest(identifier: reminder.id.uuidString,
                                             content: content,
                                             trigger: trigger)
         
         if reminder.isRemind {
-        notificationCenter.add(request) { error in
-            if let error = error {
-                print("Add Notification Error: ", error.localizedDescription)
+            notificationCenter.add(request) { error in
+                if let error = error {
+                    print("Add Notification Error: ", error.localizedDescription)
+                }
             }
         }
-    }
     }
     
     

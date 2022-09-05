@@ -15,32 +15,31 @@ struct CreateRequestView: View {
     @State private var selectedIncome = 2000.0
     @State private var email: String = ""
     @State private var lasnNum: String = ""
-    private let isSmall = UIScreen.main.bounds.width == 375
     @State private var isShowWebView: Bool = false
     @State private var ssnPlaceholder = ""
     @State private var isValidSNN: Bool = false
     @State private var isValidEmail: Bool = false
     @State private var isShowCheckmarkValidSnn: Bool = false
     @State private var isShowCheckmarkValidEmail: Bool = false
-    @EnvironmentObject var model: ViewModel
-    let firebaseManager = FirebaseManager()
+    @StateObject private var model: LoanViewModel = LoanViewModel()
+    @EnvironmentObject var firebaseManager: FirebaseManager
     
     var body: some View {
         Background {
             VStack(spacing: 0) {
                 HeaderView(step: currentStep, title: "Create a request", imageSize: model.getWidthEqualScreen(52))
                 if !isShowWebView {
-                ScrollView(showsIndicators: false) {
-                    VStack(spacing: 10) {
-                        SelectAmountView()
-                            .shadow(radius: 4)
-                        PersonalDetailsView()
-                            .shadow(radius: 4)
+                    ScrollView(showsIndicators: false) {
+                        VStack(spacing: 10) {
+                            SelectAmountView()
+                                .shadow(radius: 4)
+                            PersonalDetailsView()
+                                .shadow(radius: 4)
                             Spacer()
+                        }
                     }
-                }
                 } else {
-                    LoanWebView(urlString: model.getURlfromRemoteConfig(email: email, snn: lasnNum, loanAmount: selectedLoan))
+                    LoanWebView(urlString: model.getURlfromRemoteConfig(url: firebaseManager.urlString, email: email, snn: lasnNum, loanAmount: selectedLoan))
                 }
             }
         }
@@ -52,7 +51,7 @@ struct CreateRequestView: View {
         }
         
     }
-
+    
     
     private func SelectAmountView() -> some View {
         VStack(alignment: .center) {
@@ -191,16 +190,12 @@ struct CreateRequestView: View {
             
             Button {
                 print("Tap: Next")
-                print("isValidSNN: ", isValidSNN)
-                print("isValidSNN: ", isValidEmail)
-                print("isEnabled", FirebaseManager.isEnabled)
                 
                 if isValidSNN && isValidEmail {
-                    if FirebaseManager.isEnabled {
+                    if firebaseManager.isEnabled {
                         withAnimation {
                             isShowWebView = true
                         }
-                       
                     }
                 }
                 
@@ -214,17 +209,13 @@ struct CreateRequestView: View {
                         RoundedRectangle(cornerRadius: 5, style: .continuous)
                             .fill(Color(hex: isValidEmail && isValidSNN ? "34CB81" : "BDBDBD")))
             }
-            
-            
-            
-            
         }
         .padding()
         .background(Color.white)
         .cornerRadius(10)
         .padding(.horizontal)
     }
-
+    
 }
 
 struct ContentView_Previews: PreviewProvider {

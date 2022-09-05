@@ -8,7 +8,7 @@ import SwiftUI
 
 struct ReminderView: View {
     @State private var isShowAddReminderView: Bool = false
-    @EnvironmentObject var model: ViewModel
+    @StateObject var model: ReminderViewModel =  ReminderViewModel()
     var body: some View {
         Background {
             VStack(spacing: 0) {
@@ -20,11 +20,11 @@ struct ReminderView: View {
                                 ReminderCard(title: reminder.title, date: model.getSeletedDay(date: reminder.date), hours: model.getSeletedHours(date: reminder.date), minute: model.getSeletedMinute(date: reminder.date), daysLeft: model.getDaysLeft(date: reminder.date), action: {
                                     model.removeReminder(uuid: reminder.id)
                                 })
-                                    .padding(.top)
-                                    .padding(.horizontal)
+                                .padding(.top)
+                                .padding(.horizontal)
                             }
                         }
-
+                        
                         AddReminder()
                         Spacer()
                     }
@@ -44,7 +44,7 @@ struct ReminderView: View {
         
         .background(Color(hex: "F7F7F7")
             .ignoresSafeArea(.all))
-
+        
     }
     
     private func AddReminder() -> some View {
@@ -60,6 +60,7 @@ struct ReminderView: View {
                 }
                 .sheet(isPresented: $isShowAddReminderView) {
                     AddReminderView()
+                        .environmentObject(model)
                 }
                 Text("Add reminder")
                     .font(.medium16())

@@ -10,7 +10,6 @@ struct FetchingCurrency: Identifiable {
     var id = UUID().uuidString
     var currencyName: String
     var currencyValue: Double
-    
 }
 
 
@@ -20,5 +19,4 @@ struct Currency: Identifiable {
     var currencyName: String
     var currencyFullName: String
     var currencyValue: String
-
 }

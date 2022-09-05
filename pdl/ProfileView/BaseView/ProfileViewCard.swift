@@ -6,19 +6,17 @@
 
 import SwiftUI
 
-struct BaseViewCard: View {
+struct ProfileViewCard: View {
     let card: Card
+    let isRequirements: Bool
+    let isLast: Bool
     
     var body: some View {
-        
-        Flashcard(isBackEmpty: card.descriptionCard.isEmpty, bacgroundImage: card.image) {
+        Flashcard(heightCard: !isRequirements ? 200 : isLast ? 300 : 150, isBackEmpty: card.descriptionCard.isEmpty, bacgroundImage: card.image) {
             frontView()
         } back: {
             backView()
         }
-        
-        
-        
     }
     
     private func frontView() -> some View {
@@ -29,9 +27,9 @@ struct BaseViewCard: View {
                     .foregroundColor(Color(hex: "E6E6E6"))
             }
             Text(card.titleCard)
-                .font(.medium18())
-                .foregroundColor(.black)
-            
+                .multilineTextAlignment(.center)
+                .font(isRequirements ? .semibold22() : .medium18())
+                .foregroundColor(isRequirements ? .white : .black)
         }
     }
     
@@ -43,8 +41,8 @@ struct BaseViewCard: View {
 }
 
 
-struct BaseViewCard_Previews: PreviewProvider {
+struct ProfileViewCard_Previews: PreviewProvider {
     static var previews: some View {
-        BaseViewCard(card: BaseViewModel.profileModels[0].cards[0])
+        ProfileViewCard(card: BaseViewModel.profileModels[0].cards[0], isRequirements: false, isLast: false)
     }
 }

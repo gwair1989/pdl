@@ -14,8 +14,6 @@ struct Reminder: Codable, Identifiable {
     let isRemind: Bool
     let isRepeat: Repeat
     let title: String
-    
-
 }
 
 enum Repeat: String, Equatable, CaseIterable, Codable {

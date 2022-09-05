@@ -16,9 +16,3 @@ struct LoanWebView: View {
         }
     }
 }
-
-//struct LoanWebView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        LoanWebView()
-//    }
-//}

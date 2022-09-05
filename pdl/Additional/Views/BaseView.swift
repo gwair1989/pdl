@@ -6,42 +6,32 @@
 
 import SwiftUI
 
-struct BaseView: View {
-    let model: BaseViewModel
-    
+struct BaseView<BaseContent>: View where BaseContent: View {
+    let title: String
+    var content: () -> BaseContent
     @Environment(\.presentationMode) var presentationMode
     
+    init(title: String, @ViewBuilder content: @escaping () -> BaseContent) {
+        self.title = title
+        self.content = content
+    }
     
     var body: some View {
         VStack(spacing: 0) {
-            TopView(title: model.titleView) {
+            TopView(title: title) {
                 presentationMode.wrappedValue.dismiss()
             }
             ScrollView(showsIndicators: false) {
                 VStack(alignment: .center, spacing: 0) {
-                    ForEach(model.cards) { card in
-
-                        BaseViewCard(card: card)
-                            .shadow(radius: 3)
-
-                    }
+                    content()
                 }
             }
-           
+            
             .background(Color(hex: "F7F7F7")
                 .ignoresSafeArea(.all))
         }
         .navigationBarHidden(true)
         
     }
-    
 
-
-    
-}
-
-struct BaseView_Previews: PreviewProvider {
-    static var previews: some View {
-        BaseView(model: BaseViewModel.profileModels[0])
-    }
 }

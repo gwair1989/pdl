@@ -19,7 +19,7 @@ struct TopView: View {
                     .font(.system(size: 20, weight: .bold, design: .default))
                     .foregroundColor(.black)
             }
-
+            
             Text(title)
                 .font(.semibold30())
                 .foregroundColor(.black)

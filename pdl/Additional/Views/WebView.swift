@@ -10,7 +10,6 @@ import WebKit
 struct WebView: UIViewRepresentable {
     
     let urlString: String
-    
     @Binding var showLoading: Bool
     
     func makeUIView(context: Context) -> some UIView {
@@ -18,26 +17,23 @@ struct WebView: UIViewRepresentable {
         webView.navigationDelegate = context.coordinator
         print(urlString)
         if let url = URL(string: urlString)  {
-        let request = URLRequest(url: url)
-        webView.load(request)
+            let request = URLRequest(url: url)
+            webView.load(request)
         }
         return webView
     }
     
     
     func updateUIView(_ uiView: UIViewType, context: Context) {
-
     }
-
+    
     func makeCoordinator() -> WebViewCoordinator {
         WebViewCoordinator {
             showLoading = true
         } didFinish: {
             showLoading = false
         }
-
     }
-    
 }
 
 class WebViewCoordinator: NSObject, WKNavigationDelegate {
