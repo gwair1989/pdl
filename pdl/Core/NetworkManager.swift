@@ -31,23 +31,20 @@ class NetworkManager: ObservableObject {
     
     func getNetworkStatus() {
         monitor.pathUpdateHandler = { path in
+            print("Network Status: ", path.status)
             switch path.status {
             case .satisfied:
                 DispatchQueue.main.async {
                     self.isShowAlert = false
                 }
-                print("Network Status: ", path.status)
             case .unsatisfied:
                 DispatchQueue.main.async {
                     self.isShowAlert = true
                 }
-                print("Network Status: ", path.status)
             case .requiresConnection:
                 DispatchQueue.main.async {
                     self.isShowAlert = true
                 }
-                print("Network Status: ", path.status)
-                
             @unknown default:
                 print("Network Status default: ", path.status)
             }

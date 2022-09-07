@@ -12,33 +12,23 @@ class CurrencyViewModel: ObservableObject, ProtocolsViewModel {
     
     @Published var currences: [Currency] = []
     
-    init() {
+    let dataService: DataServiseProtocol
+    
+    init(dataService: DataServiseProtocol) {
+        self.dataService = dataService
         fetchCurrency()
     }
     
     private func fetchCurrency() {
-        let urlString = "https://api.exchangerate.host/latest?base=USD"
-        guard let url = URL(string: urlString) else { return }
-        let session = URLSession(configuration: .default)
-        session.dataTask(with: url) { data, _, _ in
-            guard let jsonData = data else { return }
-            
-            do {
-                let conversion = try JSONDecoder().decode(Conversion.self, from: jsonData)
-                DispatchQueue.main.async {
-                    let conversionData = conversion.rates.compactMap({ key, value in
-                        
-                        return FetchingCurrency(currencyName: key, currencyValue: value)
-                    })
-                    self.getCurrency(conversionData: conversionData)
-                    
-                }
+        dataService.fetchConversion { [weak self] conversion in
+            guard let conversion = conversion else { return }
+            DispatchQueue.main.async {
+                let conversionData = conversion.rates.compactMap({ key, value in
+                    return FetchingCurrency(currencyName: key, currencyValue: value)
+                })
+                self?.getCurrency(conversionData: conversionData)
             }
-            catch {
-                print("Error fetchCurrency: ", error.localizedDescription)
-            }
-        }
-        .resume()
+        } 
     }
     
     

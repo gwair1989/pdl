@@ -190,7 +190,6 @@ struct CreateRequestView: View {
             
             Button {
                 print("Tap: Next")
-                
                 if isValidSNN && isValidEmail {
                     if firebaseManager.isEnabled {
                         withAnimation {

@@ -8,10 +8,12 @@ import SwiftUI
 
 struct MainView: View {
     @State private var selectedView = 1
-    @State private var showAlert = false
+
     @EnvironmentObject var firebaseManager: FirebaseManager
     @EnvironmentObject var networkManager: NetworkManager
     
+    private let dataService = DataFetcherService()
+    private let mockDadaService = MockDataFetcherService()
     var body: some View {
         NavigationView {
             ZStack {
@@ -34,7 +36,7 @@ struct MainView: View {
                                 Text("Loan")
                             }.tag(1).statusBar(hidden: true)
                     }
-                    CurrencyView().navigationTitle("").navigationBarHidden(true)
+                    CurrencyView(dataService: dataService).navigationTitle("").navigationBarHidden(true)
                         .tabItem {
                             if #available(iOS 15.0, *) {
                                 Image(systemName: "digitalcrown.arrow.clockwise")
@@ -72,13 +74,11 @@ struct MainView: View {
                     )
                 }
                 .onChange(of: networkManager.isShowAlert, perform: { newValue in
-                    print(networkManager.isShowAlert)
                     if newValue == false {
                         firebaseManager.checkRemoteConfig()
                     }
                 })
                 .onAppear {
-                    print(networkManager.isShowAlert)
                     if #available(iOS 13.0, *) {
                         let tabBarAppearance: UITabBarAppearance = UITabBarAppearance()
                         tabBarAppearance.configureWithDefaultBackground()

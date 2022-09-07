@@ -7,13 +7,19 @@
 import SwiftUI
 
 struct CurrencyView: View {
-    @StateObject private var model: CurrencyViewModel = CurrencyViewModel()
+    @StateObject private var model: CurrencyViewModel
+    
+    init(dataService: DataServiseProtocol) {
+        _model = StateObject(wrappedValue: CurrencyViewModel(dataService: dataService))
+    }
+    
     
     var body: some View {
         VStack(spacing: 0) {
             HeaderView(step: nil, title: "Current exchange", imageSize: model.getWidthEqualScreen(52))
             headerView()
             if model.currences.isEmpty {
+                Spacer()
                 ProgressView()
             } else {
                 ScrollView {
@@ -63,7 +69,10 @@ struct CurrencyView: View {
 }
 
 struct CurrencyView_Previews: PreviewProvider {
+    static let dataService = DataFetcherService()
+//    static let mockDateService = MockDataFetcherService(mockData: Conversion(rates: ["UAH": 29.835471, "RUB": 57.072392, "CHF": 0.989471]))
+    static let mockDateService = MockDataFetcherService()
     static var previews: some View {
-        CurrencyView()
+        CurrencyView(dataService: mockDateService)
     }
 }

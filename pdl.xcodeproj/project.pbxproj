@@ -21,6 +21,9 @@
 		1F32E22C28AEE552001D45F0 /* ReminderCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F32E22B28AEE552001D45F0 /* ReminderCard.swift */; };
 		1F718D8828AEC63B005D888B /* CurrencyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F718D8728AEC63B005D888B /* CurrencyView.swift */; };
 		1F74EA1428B54B860030D088 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F74EA1328B54B860030D088 /* ProfileView.swift */; };
+		1F75FE5D28C73E2F00DBDC97 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F75FE5A28C73E2F00DBDC97 /* NetworkService.swift */; };
+		1F75FE5E28C73E2F00DBDC97 /* DataFetcherService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F75FE5B28C73E2F00DBDC97 /* DataFetcherService.swift */; };
+		1F75FE5F28C73E2F00DBDC97 /* NetworkDataFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F75FE5C28C73E2F00DBDC97 /* NetworkDataFetcher.swift */; };
 		1F848A1428B60D1B008408DC /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F848A1328B60D1B008408DC /* NotificationManager.swift */; };
 		1F848A1728B656D6008408DC /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F848A1628B656D6008408DC /* BaseView.swift */; };
 		1F848A1928B65713008408DC /* TopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F848A1828B65713008408DC /* TopView.swift */; };
@@ -67,6 +70,9 @@
 		1F32E22B28AEE552001D45F0 /* ReminderCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderCard.swift; sourceTree = "<group>"; };
 		1F718D8728AEC63B005D888B /* CurrencyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyView.swift; sourceTree = "<group>"; };
 		1F74EA1328B54B860030D088 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		1F75FE5A28C73E2F00DBDC97 /* NetworkService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
+		1F75FE5B28C73E2F00DBDC97 /* DataFetcherService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataFetcherService.swift; sourceTree = "<group>"; };
+		1F75FE5C28C73E2F00DBDC97 /* NetworkDataFetcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkDataFetcher.swift; sourceTree = "<group>"; };
 		1F848A1328B60D1B008408DC /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		1F848A1628B656D6008408DC /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
 		1F848A1828B65713008408DC /* TopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopView.swift; sourceTree = "<group>"; };
@@ -126,6 +132,7 @@
 		1F11EDF628C4DDBF008B25A9 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				1F75FE5928C73E2F00DBDC97 /* Services */,
 				1F848A1328B60D1B008408DC /* NotificationManager.swift */,
 				1F11EDF228C4C76B008B25A9 /* NetworkManager.swift */,
 				1FBBFF6728B7B0D300B66E63 /* FirebaseManager.swift */,
@@ -192,6 +199,16 @@
 				1F9EA75628C628FC00C6B492 /* CurrencyViewModel.swift */,
 			);
 			path = CurrencyView;
+			sourceTree = "<group>";
+		};
+		1F75FE5928C73E2F00DBDC97 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				1F75FE5A28C73E2F00DBDC97 /* NetworkService.swift */,
+				1F75FE5B28C73E2F00DBDC97 /* DataFetcherService.swift */,
+				1F75FE5C28C73E2F00DBDC97 /* NetworkDataFetcher.swift */,
+			);
+			path = Services;
 			sourceTree = "<group>";
 		};
 		1F848A1528B656A3008408DC /* ProfileView */ = {
@@ -436,13 +453,16 @@
 				1FAFED6328ACEA74009B0E33 /* Font.swift in Sources */,
 				1FAFED6728AD1E9F009B0E33 /* View.swift in Sources */,
 				1F9EA75928C62B6C00C6B492 /* ReminderViewModel.swift in Sources */,
+				1F75FE5D28C73E2F00DBDC97 /* NetworkService.swift in Sources */,
 				1FD4CD4228B4ED9500982457 /* HeaderView.swift in Sources */,
 				1F9EA75728C628FC00C6B492 /* CurrencyViewModel.swift in Sources */,
 				1FA8B83B28B3BC64007FEF41 /* Conversion.swift in Sources */,
+				1F75FE5E28C73E2F00DBDC97 /* DataFetcherService.swift in Sources */,
 				1F9EA75B28C633BC00C6B492 /* ProtocolsViewModel.swift in Sources */,
 				1F848A1728B656D6008408DC /* BaseView.swift in Sources */,
 				1FBBFF6628B7AE4900B66E63 /* LoanWebView.swift in Sources */,
 				1FBBFF6428B7A39000B66E63 /* WebView.swift in Sources */,
+				1F75FE5F28C73E2F00DBDC97 /* NetworkDataFetcher.swift in Sources */,
 				1FAFED5528ACE6F6009B0E33 /* CreateRequestView.swift in Sources */,
 				1F718D8828AEC63B005D888B /* CurrencyView.swift in Sources */,
 				1F2842E628AE38570017ECC1 /* CalculatorView.swift in Sources */,

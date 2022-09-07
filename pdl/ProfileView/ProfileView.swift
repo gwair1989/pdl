@@ -62,8 +62,6 @@ struct ProfileView: View {
         }
         .frame(maxWidth: .infinity)
         .padding()
-        
-        
     }
     
 }

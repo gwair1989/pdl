@@ -15,7 +15,6 @@ struct WebView: UIViewRepresentable {
     func makeUIView(context: Context) -> some UIView {
         let webView = WKWebView()
         webView.navigationDelegate = context.coordinator
-        print(urlString)
         if let url = URL(string: urlString)  {
             let request = URLRequest(url: url)
             webView.load(request)
@@ -56,7 +55,7 @@ class WebViewCoordinator: NSObject, WKNavigationDelegate {
     }
     
     func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
-        print(error)
+        print(error.localizedDescription)
     }
     
 }
