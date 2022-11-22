@@ -110,57 +110,67 @@ struct AddReminderView: View {
                             isShowPicker.toggle()
                         }
                     }
-                
-                VStack(alignment: .leading, spacing: 8) {
-                    Text("Recharge Type")
-                        .font(.regular16())
-                        .foregroundColor(.white)
-                    
-                    ZStack {
-                        TextField("", text: $titleReminder)
-                            .placeholder(when: titleReminder.isEmpty) {
-                                Text(verbatim: "Title")
-                                    .font(.medium18())
-                                    .foregroundColor(Color(hex: "BDBDBD"))
-                            }
-                            .textContentType(.emailAddress)
-                            .keyboardType(.emailAddress)
-                            .padding()
-                            .background(Color(hex: "F5F8F9"))
-                            .cornerRadius(5)
-                            .foregroundColor(.black)
-                    }
-                }
-                .padding(.vertical)
+                rechargeView
             }
             .padding(.top)
             
             if isShowPicker {
-                VStack {
-                    Group {
-                        Picker(selection: $selection) {
-                            ForEach(Repeat.allCases, id: \.self) { value in
-                                Text(value.localizedName)
-                                    .font(.medium18())
-                                    .foregroundColor(.white)
-                                    .tag(value)
-                            }
-                            .onChange(of: selection) { newValue in
-                                withAnimation {
-                                    isShowPicker.toggle()
-                                }
-                            }
-                        } label: {
-                            Text("Picker")
-                        }
-                        .pickerStyle(.inline)
-                    }
-                }
+                pickerView
             }
         }
         .padding()
         .background(Color(hex: "34CB81"))
         .cornerRadius(10)
+    }
+    
+    
+    private var pickerView: some View {
+        VStack {
+            Group {
+                Picker(selection: $selection) {
+                    ForEach(Repeat.allCases, id: \.self) { value in
+                        Text(value.localizedName)
+                            .font(.medium18())
+                            .foregroundColor(.white)
+                            .tag(value)
+                    }
+                    .onChange(of: selection) { newValue in
+                        withAnimation {
+                            isShowPicker.toggle()
+                        }
+                    }
+                } label: {
+                    Text("Picker")
+                }
+                .pickerStyle(.inline)
+            }
+        }
+    }
+    
+    
+    private var rechargeView: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text("Recharge Type")
+                .font(.regular16())
+                .foregroundColor(.white)
+            
+            ZStack {
+                TextField("", text: $titleReminder)
+                    .placeholder(when: titleReminder.isEmpty) {
+                        Text(verbatim: "Title")
+                            .font(.medium18())
+                            .foregroundColor(Color(hex: "BDBDBD"))
+                    }
+                    .textContentType(.emailAddress)
+                    .keyboardType(.emailAddress)
+                    .padding()
+                    .background(Color(hex: "F5F8F9"))
+                    .cornerRadius(5)
+                    .foregroundColor(.black)
+            }
+        }
+        .padding(.vertical)
+
     }
     
     private func callPickerView() -> some View {

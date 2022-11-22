@@ -24,7 +24,6 @@ struct CalculatorView: View {
                     SlidersView()
                         .shadow(radius: 4)
                 }
-                
             }
         }
         .background(Color(hex: "F7F7F7")
@@ -38,6 +37,7 @@ struct CalculatorView: View {
                 Text("$\(model.calulate(loan: selectedLoanAmount, rate: selectedInterestRate, term: selectedLoanTermInMonth))")
                     .font(.bold30())
                     .foregroundColor(.white)
+                    .accessibilityIdentifier("MonthlyPayment")
                 Text("Est. Monthly Payment")
                     .font(.regular16())
                     .foregroundColor(.white)
@@ -50,6 +50,7 @@ struct CalculatorView: View {
                 Text("$\(model.getFullAmount(loan: selectedLoanAmount, rate: selectedInterestRate, term: selectedLoanTermInMonth))")
                     .font(.medium12())
                     .foregroundColor(Color(hex: "CACACA"))
+                    .accessibilityIdentifier("LoanCost")
             }
         }
         .padding(.vertical)
@@ -85,6 +86,7 @@ struct CalculatorView: View {
                 Text("$\(Int(selectedLoanAmount))")
                     .font(.bold30())
                     .foregroundColor(.black)
+                    .accessibilityIdentifier("LoanAmountSliderResult")
             }
             
             
@@ -106,6 +108,7 @@ struct CalculatorView: View {
                 isEditing = editing
             }
             .accentColor(Color(hex: "34CB81"))
+            .accessibilityIdentifier("LoanAmountSlider")
             
         }
     }
@@ -120,6 +123,7 @@ struct CalculatorView: View {
                 Text("\(Int(selectedInterestRate))%")
                     .font(.bold30())
                     .foregroundColor(.black)
+                    .accessibilityIdentifier("InterestRateSliderResult")
             }
             
             
@@ -141,6 +145,7 @@ struct CalculatorView: View {
                 isEditing = editing
             }
             .accentColor(Color(hex: "34CB81"))
+            .accessibilityIdentifier("InterestRateSlider")
             
         }
     }
@@ -155,6 +160,7 @@ struct CalculatorView: View {
                 Text("\(Int(selectedLoanTermInMonth))")
                     .font(.bold30())
                     .foregroundColor(.black)
+                    .accessibilityIdentifier("  ")
             }
             
             
@@ -176,6 +182,7 @@ struct CalculatorView: View {
                 isEditing = editing
             }
             .accentColor(Color(hex: "34CB81"))
+            .accessibilityIdentifier("LoanTermInMonthSlider")
             
         }
     }

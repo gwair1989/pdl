@@ -88,6 +88,7 @@ struct CreateRequestView: View {
                 isEditing = editing
             }
             .accentColor(Color(hex: "34CB81"))
+            .accessibilityIdentifier("SelectAmountSlider")
             
         }
         .padding()
@@ -99,95 +100,12 @@ struct CreateRequestView: View {
     
     private func PersonalDetailsView() -> some View {
         VStack(alignment: .center, spacing: 25) {
-            
             Text("Personal Details")
                 .font(.semibold18())
                 .foregroundColor(.black)
             
-            VStack(alignment: .leading, spacing: 10) {
-                Text("Your e-mail address")
-                    .font(.regular16())
-                    .foregroundColor(Color(hex: "BDBDBD"))
-                
-                ZStack {
-                    TextField("", text: $email)
-                        .placeholder(when: email.isEmpty) {
-                            Text(verbatim: "zuza@yahoo.com")
-                                .font(.medium18())
-                                .foregroundColor(Color(hex: "BDBDBD"))
-                        }
-                        .textContentType(.emailAddress)
-                        .keyboardType(.emailAddress)
-                        .padding()
-                        .background(Color(hex: "F5F8F9"))
-                        .cornerRadius(5)
-                        .foregroundColor(.black)
-                        .onChange(of: email) { newValue in
-                            isValidEmail = model.isEmailValid(newValue)
-                            isShowCheckmarkValidEmail = true
-                        }
-                    if isShowCheckmarkValidEmail {
-                        HStack {
-                            Spacer()
-                            Image(systemName: isValidEmail ? "checkmark" : "xmark")
-                                .font(.system(size: 17))
-                                .foregroundColor(Color(hex: isValidEmail ? "34CB81" : "FF0000"))
-                        }
-                        .padding(.trailing)
-                    }
-                }
-            }
-            
-            VStack(alignment: .leading, spacing: 10) {
-                Text("Last 4 numbers of SSN")
-                    .font(.regular16())
-                    .foregroundColor(Color(hex: "BDBDBD"))
-                
-                ZStack {
-                    TextField("", text: isValidSNN ? $ssnPlaceholder : $lasnNum, onEditingChanged: { isEditing in
-                        if isEditing {
-                            lasnNum = ""
-                            ssnPlaceholder = ""
-                        }
-                    }, onCommit: {
-                        
-                    })
-                    .placeholder(when: lasnNum.isEmpty && !isShowCheckmarkValidSnn) {
-                        HStack {
-                            Text("•••-••-1234")
-                                .font(.medium18())
-                                .foregroundColor(Color(hex: "BDBDBD"))
-                        }
-                    }
-                    .keyboardType(.numbersAndPunctuation)
-                    .padding()
-                    .background(Color(hex: "F5F8F9"))
-                    .cornerRadius(5)
-                    .foregroundColor(.black)
-                    .onChange(of: lasnNum) { newValue in
-                        isShowCheckmarkValidSnn = true
-                        let snnPlace = "•••-••-"
-                        ssnPlaceholder = ""
-                        if ssnPlaceholder.isEmpty {
-                            isValidSNN = model.isSSNValid(newValue)
-                        }
-                        if isValidSNN {
-                            ssnPlaceholder = snnPlace + lasnNum
-                        }
-                    }
-                    
-                    if isShowCheckmarkValidSnn {
-                        HStack {
-                            Spacer()
-                            Image(systemName: isValidSNN ? "checkmark" : "xmark")
-                                .font(.system(size: 17))
-                                .foregroundColor(Color(hex: isValidSNN ? "34CB81" : "FF0000"))
-                        }
-                        .padding(.trailing)
-                    }
-                }
-            }
-            
+            emailView
+            ssnView
             Button {
                 print("Tap: Next")
                 if isValidSNN && isValidEmail {
@@ -208,11 +126,104 @@ struct CreateRequestView: View {
                         RoundedRectangle(cornerRadius: 5, style: .continuous)
                             .fill(Color(hex: isValidEmail && isValidSNN ? "34CB81" : "BDBDBD")))
             }
+            .accessibilityIdentifier("nextButton")
         }
         .padding()
         .background(Color.white)
         .cornerRadius(10)
         .padding(.horizontal)
+    }
+    
+    private var ssnView: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            Text("Last 4 numbers of SSN")
+                .font(.regular16())
+                .foregroundColor(Color(hex: "BDBDBD"))
+            
+            ZStack {
+                TextField("", text: isValidSNN ? $ssnPlaceholder : $lasnNum, onEditingChanged: { isEditing in
+                    if isEditing {
+                        lasnNum = ""
+                        ssnPlaceholder = ""
+                    }
+                }, onCommit: {
+                    
+                })
+                .placeholder(when: lasnNum.isEmpty && !isShowCheckmarkValidSnn) {
+                    HStack {
+                        Text("•••-••-1234")
+                            .font(.medium18())
+                            .foregroundColor(Color(hex: "BDBDBD"))
+                    }
+                }
+                .accessibilityIdentifier("ssnTextField")
+                .keyboardType(.numbersAndPunctuation)
+                .padding()
+                .background(Color(hex: "F5F8F9"))
+                .cornerRadius(5)
+                .foregroundColor(.black)
+                .onChange(of: lasnNum) { newValue in
+                    isShowCheckmarkValidSnn = true
+                    let snnPlace = "•••-••-"
+                    ssnPlaceholder = ""
+                    if ssnPlaceholder.isEmpty {
+                        isValidSNN = model.isSSNValid(newValue)
+                    }
+                    if isValidSNN {
+                        ssnPlaceholder = snnPlace + lasnNum
+                    }
+                }
+                
+                if isShowCheckmarkValidSnn {
+                    HStack {
+                        Spacer()
+                        Image(systemName: isValidSNN ? "checkmark" : "xmark")
+                            .accessibilityIdentifier("validImageSnn")
+                            .font(.system(size: 17))
+                            .foregroundColor(Color(hex: isValidSNN ? "34CB81" : "FF0000"))
+                    }
+                    .padding(.trailing)
+                }
+            }
+        }
+    }
+    
+    private var emailView: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            Text("Your e-mail address")
+                .font(.regular16())
+                .foregroundColor(Color(hex: "BDBDBD"))
+            
+            ZStack {
+                TextField("", text: $email)
+                    .placeholder(when: email.isEmpty) {
+                        Text(verbatim: "zuza@yahoo.com")
+                            .font(.medium18())
+                            .foregroundColor(Color(hex: "BDBDBD"))
+                    }
+                    .accessibilityIdentifier("emailTextField")
+                    .textContentType(.emailAddress)
+                    .keyboardType(.emailAddress)
+                    .padding()
+                    .background(Color(hex: "F5F8F9"))
+                    .cornerRadius(5)
+                    .foregroundColor(.black)
+                    .onChange(of: email) { newValue in
+                        isValidEmail = model.isEmailValid(newValue)
+                        isShowCheckmarkValidEmail = true
+                    }
+                if isShowCheckmarkValidEmail {
+                    HStack {
+                        Spacer()
+                        Image(systemName: isValidEmail ? "checkmark" : "xmark")
+                            .accessibilityIdentifier("validImageEmail")
+                            .font(.system(size: 17))
+                            .foregroundColor(Color(hex: isValidEmail ? "34CB81" : "FF0000"))
+                    }
+                    .padding(.trailing)
+                }
+            }
+        }
     }
     
 }

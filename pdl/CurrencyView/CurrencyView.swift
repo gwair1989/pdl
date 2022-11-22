@@ -23,7 +23,7 @@ struct CurrencyView: View {
                 ProgressView()
             } else {
                 ScrollView {
-                    VStack(alignment: .center, spacing: 0) {
+                    LazyVStack(alignment: .center, spacing: 0) {
                         ForEach(model.currences) { currency in
                             CurrencyCard(currency: currency)
                         }
@@ -70,7 +70,6 @@ struct CurrencyView: View {
 
 struct CurrencyView_Previews: PreviewProvider {
     static let dataService = DataFetcherService()
-//    static let mockDateService = MockDataFetcherService(mockData: Conversion(rates: ["UAH": 29.835471, "RUB": 57.072392, "CHF": 0.989471]))
     static let mockDateService = MockDataFetcherService()
     static var previews: some View {
         CurrencyView(dataService: mockDateService)

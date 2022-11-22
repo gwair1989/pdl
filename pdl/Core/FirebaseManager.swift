@@ -10,8 +10,8 @@ import FirebaseRemoteConfig
 
 class FirebaseManager: ObservableObject {
     
-    @Published var isShowLoan = false
-    @Published var isEnabled = false
+    @Published var isShowLoan = true
+    @Published var isEnabled = true
     @Published var urlString = ""
     
     private var remoteConfig = RemoteConfig.remoteConfig()
@@ -22,8 +22,8 @@ class FirebaseManager: ObservableObject {
     
     func checkRemoteConfig() {
         let defaults: [String: NSObject] = [
-            "isShowLoan" : false as NSObject,
-            "isEnabled" : false as NSObject,
+            "isShowLoan" : true as NSObject,
+            "isEnabled" : true as NSObject,
             "urlString" : "" as NSObject
         ]
         
